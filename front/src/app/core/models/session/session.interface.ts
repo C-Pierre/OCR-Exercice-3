@@ -1,10 +1,12 @@
+import { User } from "../user/user.interface";
+
 export interface Session {
   id?: number;
   name: string;
   description: string;
   date: Date;
-  teacher_id: number;
-  users: number[];
+  teacherId: number;
+  users: User[];
   createdAt?: Date;
   updatedAt?: Date;
 }

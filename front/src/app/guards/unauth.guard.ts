@@ -1,6 +1,7 @@
+import { firstValueFrom } from "rxjs";
 import {Injectable} from "@angular/core";
 import {CanActivate, Router} from "@angular/router";
-import { SessionService } from "../core/service/session.service";
+import { SessionService } from "../core/service/auth/session.service";
 
 @Injectable({providedIn: 'root'})
 export class UnauthGuard implements CanActivate {
@@ -11,11 +12,14 @@ export class UnauthGuard implements CanActivate {
   ) {
   }
 
-  public canActivate(): boolean {
-    if (this.sessionService.isLogged) {
-      this.router.navigate(['rentals']);
+  public async canActivate(): Promise<boolean>  {
+    const logged = await firstValueFrom(this.sessionService.isLogged$);
+    
+    if (logged) {
+      this.router.navigate(['login']);
       return false;
     }
+
     return true;
   }
 }

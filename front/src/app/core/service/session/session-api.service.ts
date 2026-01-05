@@ -1,14 +1,15 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Session } from '../models/session.interface';
+import { Session } from '../../models/session/session.interface';
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SessionApiService {
 
-  private pathService = 'api/session';
+  private pathService =  `${environment.baseUrl}/session`;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -21,8 +22,8 @@ export class SessionApiService {
     return this.httpClient.get<Session>(`${this.pathService}/${id}`);
   }
 
-  public delete(id: string): Observable<any> {
-    return this.httpClient.delete(`${this.pathService}/${id}`);
+  public delete(id: string): Observable<void> {
+    return this.httpClient.delete<void>(`${this.pathService}/${id}`);
   }
 
   public create(session: Session): Observable<Session> {
@@ -38,7 +39,7 @@ export class SessionApiService {
   }
 
   public unParticipate(id: string, userId: string): Observable<void> {
-    return this.httpClient.delete<void>(`${this.pathService}/${id}/participate/${userId}`);
+    return this.httpClient.delete<void>(`${this.pathService}/${id}/no-participate/${userId}`);
   }
 
 }

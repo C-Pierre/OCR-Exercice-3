@@ -1,9 +1,9 @@
 import { Component, inject } from '@angular/core';
-import { Observable } from 'rxjs';
-import { SessionInformation } from '../../../../core/models/sessionInformation.interface';
-import { SessionService } from '../../../../core/service/session.service';
-import { Session } from '../../../../core/models/session.interface';
-import { SessionApiService } from '../../../../core/service/session-api.service';
+import { map, Observable } from 'rxjs';
+import { SessionInformation } from '../../../../core/models/auth/sessionInformation.interface';
+import { SessionService } from '../../../../core/service/auth/session.service';
+import { Session } from '../../../../core/models/session/session.interface';
+import { SessionApiService } from '../../../../core/service/session/session-api.service';
 import { MaterialModule } from "../../../../shared/material.module";
 import { CommonModule } from "@angular/common";
 import { RouterModule } from "@angular/router";
@@ -11,16 +11,62 @@ import { RouterModule } from "@angular/router";
 @Component({
   selector: 'app-list',
   imports: [CommonModule, MaterialModule, RouterModule],
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss']
+  standalone: true,
+  styleUrls: ['./list.component.scss'],
+  template: `
+    <div class="list">
+      <mat-card>
+          <mat-card-header fxLayout="row" fxLayoutAlign="space-between center">
+          <mat-card-title class="m0">Sessions available</mat-card-title>
+          @if ((user$ | async)?.admin) {
+            <button mat-raised-button color="primary" routerLink="create">
+              <mat-icon>add</mat-icon>
+              <span class="ml1">Create</span>
+            </button>
+          }
+        </mat-card-header>
+        <div class="items mt2" fxLayout="row wrap" fxLayout.lt-md="column">
+          @for (session of sessions$ | async; track session.id) {
+            <mat-card class="item" fxFlex>
+            <mat-card-header>
+              <mat-card-title>{{ session.name }}</mat-card-title>
+              <mat-card-subtitle>
+                Session on {{ session.date | date: 'longDate'}}
+              </mat-card-subtitle>
+            </mat-card-header>
+            <div mat-card-image fxLayoutAlign="center center">
+              <img class="picture" src="assets/sessions.png" alt="Yoga session">
+            </div>
+            <mat-card-content>
+              <p>
+                {{ session.description }}
+              </p>
+            </mat-card-content>
+            <mat-card-actions>
+              <button mat-raised-button color="primary" [routerLink]="['detail',session.id]">
+                <mat-icon>search</mat-icon>
+                <span class="ml1">Detail</span>
+              </button>
+                @if ((user$ | async)?.admin) {
+                  <button mat-raised-button color="primary" [routerLink]="['update',session.id]">
+                    <mat-icon>edit</mat-icon>
+                    <span class="ml1">Edit</span>
+                  </button>
+                }
+            </mat-card-actions>
+            </mat-card>
+          }
+        </div>
+      </mat-card>
+    </div>
+  `
 })
 export class ListComponent {
   private sessionApiService = inject(SessionApiService);
   private sessionService = inject(SessionService);
 
   public sessions$: Observable<Session[]> = this.sessionApiService.all();
-
-  get user(): SessionInformation | undefined {
-    return this.sessionService.sessionInformation;
-  }
+  public user$: Observable<SessionInformation | undefined> = this.sessionService.isLogged$.pipe(
+    map(() => this.sessionService.sessionInformation)
+  );
 }
