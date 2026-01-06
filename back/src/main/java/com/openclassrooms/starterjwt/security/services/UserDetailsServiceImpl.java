@@ -1,35 +1,33 @@
 package com.openclassrooms.starterjwt.security.services;
 
-import com.openclassrooms.starterjwt.models.User;
-import com.openclassrooms.starterjwt.repository.UserRepository;
+import org.springframework.stereotype.Service;
+import com.openclassrooms.starterjwt.user.model.User;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import com.openclassrooms.starterjwt.user.repository.port.UserRepositoryPort;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
-    UserRepository userRepository;
+    UserRepositoryPort userRepositoryPort;
 
-    UserDetailsServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    UserDetailsServiceImpl(UserRepositoryPort userRepositoryPort) {
+        this.userRepositoryPort = userRepositoryPort;
     }
 
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User Not Found with email: " + username));
+        User user = userRepositoryPort.getByEmail(username);
 
         return UserDetailsImpl
-                .builder()
-                .id(user.getId())
-                .username(user.getEmail())
-                .lastName(user.getLastName())
-                .firstName(user.getFirstName())
-                .password(user.getPassword())
-                .build();
+            .builder()
+            .id(user.getId())
+            .username(user.getEmail())
+            .lastName(user.getLastName())
+            .firstName(user.getFirstName())
+            .password(user.getPassword())
+            .build();
     }
-
 }
