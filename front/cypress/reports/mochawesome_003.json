@@ -1,0 +1,181 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-01-13T18:52:59.811Z",
+    "end": "2026-01-13T18:53:05.298Z",
+    "duration": 5487,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "c6f6c966-5984-43aa-89df-de82d73f8c7e",
+      "title": "",
+      "fullFile": "cypress/e2e/app/pages/register/register.cy.ts",
+      "file": "cypress/e2e/app/pages/register/register.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "3f448d99-73c6-4953-8e27-c3012973ec40",
+          "title": "Register page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should display register form correctly",
+              "fullTitle": "Register page Should display register form correctly",
+              "timedOut": null,
+              "duration": 362,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('mat-card-title').should('have.text', 'Register');\ncy.get('input[formControlName=firstName]').should('exist');\ncy.get('input[formControlName=lastName]').should('exist');\ncy.get('input[formControlName=email]').should('exist');\ncy.get('input[formControlName=password]').should('exist');\ncy.get('button[type=submit]').should('be.disabled');",
+              "err": {},
+              "uuid": "d0ec1eb0-8b35-4860-b3e5-8c19b3e031f1",
+              "parentUUID": "3f448d99-73c6-4953-8e27-c3012973ec40",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should register successfully and redirect to login",
+              "fullTitle": "Register page Should register successfully and redirect to login",
+              "timedOut": null,
+              "duration": 1329,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('POST', '/api/auth/register', {\n    statusCode: 200,\n    body: {}\n}).as('register');\ncy.get('input[formControlName=firstName]').type('John');\ncy.get('input[formControlName=lastName]').type('Doe');\ncy.get('input[formControlName=email]').type('john.doe@example.com');\ncy.get('input[formControlName=password]').type('123456');\ncy.get('button[type=submit]').should('not.be.disabled').click();\ncy.wait('@register');\ncy.url().should('include', '/login');",
+              "err": {},
+              "uuid": "75c95580-7cad-4619-89f4-13a0fdc0dd5d",
+              "parentUUID": "3f448d99-73c6-4953-8e27-c3012973ec40",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should display error message when register fails",
+              "fullTitle": "Register page Should display error message when register fails",
+              "timedOut": null,
+              "duration": 1291,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.intercept('POST', '/api/auth/register', {\n    statusCode: 500\n}).as('register');\ncy.get('input[formControlName=firstName]').type('John');\ncy.get('input[formControlName=lastName]').type('Doe');\ncy.get('input[formControlName=email]').type('john.doe@example.com');\ncy.get('input[formControlName=password]').type('123456');\ncy.get('button[type=submit]').click();\ncy.wait('@register');\ncy.get('.error')\n    .should('be.visible')\n    .and('contain.text', 'An error occurred');\ncy.url().should('include', '/register');",
+              "err": {},
+              "uuid": "874179a0-554c-415a-b914-eee1a43f9f40",
+              "parentUUID": "3f448d99-73c6-4953-8e27-c3012973ec40",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should not submit when form is invalid",
+              "fullTitle": "Register page Should not submit when form is invalid",
+              "timedOut": null,
+              "duration": 746,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('button[type=submit]').should('be.disabled');\ncy.intercept('POST', '/api/auth/register').as('register');\ncy.get('button[type=submit]').click({ force: true });\ncy.wait(500);\ncy.get('@register.all').should('have.length', 0);",
+              "err": {},
+              "uuid": "1214b627-8325-4339-af8d-a04ad0abf5bf",
+              "parentUUID": "3f448d99-73c6-4953-8e27-c3012973ec40",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should disable submit and show errors when fields are invalid",
+              "fullTitle": "Register page Should disable submit and show errors when fields are invalid",
+              "timedOut": null,
+              "duration": 1207,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('button[type=submit]').should('be.disabled');\ncy.get('input[formControlName=firstName]').type('John');\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('input[formControlName=lastName]').type('Doe');\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('input[formControlName=email]').type('john.doe@example.com');\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('input[formControlName=password]').type('123456');\ncy.get('button[type=submit]').should('not.be.disabled');",
+              "err": {},
+              "uuid": "fbdf7709-6fd2-4688-9cd0-faa30e3ac350",
+              "parentUUID": "3f448d99-73c6-4953-8e27-c3012973ec40",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d0ec1eb0-8b35-4860-b3e5-8c19b3e031f1",
+            "75c95580-7cad-4619-89f4-13a0fdc0dd5d",
+            "874179a0-554c-415a-b914-eee1a43f9f40",
+            "1214b627-8325-4339-af8d-a04ad0abf5bf",
+            "fbdf7709-6fd2-4688-9cd0-faa30e3ac350"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 4935,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

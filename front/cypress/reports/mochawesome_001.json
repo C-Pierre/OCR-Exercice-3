@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-01-13T18:52:52.923Z",
+    "end": "2026-01-13T18:52:55.299Z",
+    "duration": 2376,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "58caa117-21ab-4bbd-a7ab-0a3141f9501c",
+      "title": "",
+      "fullFile": "cypress/e2e/app/pages/me/me.cy.ts",
+      "file": "cypress/e2e/app/pages/me/me.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "fc7702f9-55a6-4d4d-8d9e-775d335a6aa2",
+          "title": "Account Detail page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Me - Should swho account page and see username and go back",
+              "fullTitle": "Account Detail page Me - Should swho account page and see username and go back",
+              "timedOut": null,
+              "duration": 1952,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/me');\ncy.contains(_common_fixtures_user_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.userFixtures.firstName);\ncy.contains(_common_fixtures_user_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.userFixtures.lastName);\ncy.contains(_common_fixtures_user_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.userFixtures.username);\ncy.contains('button', 'arrow_back').click();\ncy.url().should('include', '/sessions');",
+              "err": {},
+              "uuid": "d94acb30-3591-498c-900f-1eb964943be3",
+              "parentUUID": "fc7702f9-55a6-4d4d-8d9e-775d335a6aa2",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "d94acb30-3591-498c-900f-1eb964943be3"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 1952,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

@@ -1,14 +1,11 @@
-// ========================= AUTH GUARD =========================
-
 import { TestBed } from '@angular/core/testing';
 import { AuthGuard } from './auth.guard';
 import { Router } from '@angular/router';
-import { SessionService } from '../core/service/session.service';
+import { SessionService } from '../core/service/auth/session.service';
 import { BehaviorSubject, of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Component } from '@angular/core';
 import { Location } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
 import { expect } from '@jest/globals';
 
 @Component({ standalone: true, template: '<p>dummy</p>' })

@@ -1,0 +1,181 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 5,
+    "passes": 5,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-01-13T18:52:45.277Z",
+    "end": "2026-01-13T18:52:51.175Z",
+    "duration": 5898,
+    "testsRegistered": 5,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "93696879-f67f-4864-b6c6-daaf43b67d12",
+      "title": "",
+      "fullFile": "cypress/e2e/app/pages/login/login.cy.ts",
+      "file": "cypress/e2e/app/pages/login/login.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "43698498-30ae-47d0-9bd9-237a54682681",
+          "title": "Login spec",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should login successfully and redirect to sessions",
+              "fullTitle": "Login spec Should login successfully and redirect to sessions",
+              "timedOut": null,
+              "duration": 1815,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.loginAndStoreSession(_common_fixtures_user_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.userFixtures);\ncy.url().should('include', '/sessions');",
+              "err": {},
+              "uuid": "2bf4f16e-cf99-48c5-bc41-29bf8611a8cf",
+              "parentUUID": "43698498-30ae-47d0-9bd9-237a54682681",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should login and logout successfully",
+              "fullTitle": "Login spec Should login and logout successfully",
+              "timedOut": null,
+              "duration": 1184,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.loginAndStoreSession(_common_fixtures_user_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.userFixtures);\ncy.url().should('include', '/sessions');\ncy.contains('span', 'Logout').click();\ncy.url().should('include', '/login');",
+              "err": {},
+              "uuid": "e049c0cb-b492-4e1a-829c-37c1fdaed15a",
+              "parentUUID": "43698498-30ae-47d0-9bd9-237a54682681",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should display error message when login fails",
+              "fullTitle": "Login spec Should display error message when login fails",
+              "timedOut": null,
+              "duration": 924,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/login');\ncy.get('input[formControlName=email]').type('wrong@user.com');\ncy.get('input[formControlName=password]').type('badpassword');\ncy.get('button[type=submit]').click();\ncy.get('.error')\n    .should('be.visible')\n    .and('contain.text', 'An error occurred');\ncy.url().should('include', '/login');\ncy.window().then(win => {\n    expect(win.localStorage.getItem('session')).to.be.null;\n});",
+              "err": {},
+              "uuid": "2a1fe76c-d7af-4953-b41e-0295729aadcf",
+              "parentUUID": "43698498-30ae-47d0-9bd9-237a54682681",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should disable submit when email is missing or invalid",
+              "fullTitle": "Login spec Should disable submit when email is missing or invalid",
+              "timedOut": null,
+              "duration": 737,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/login');\ncy.get('input[formControlName=password]').type('test!1234');\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('input[formControlName=email]').type('not-an-email');\ncy.get('button[type=submit]').should('be.disabled');",
+              "err": {},
+              "uuid": "a0de6cd9-2856-40f8-9600-da921b93017d",
+              "parentUUID": "43698498-30ae-47d0-9bd9-237a54682681",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should disable submit when password is missing",
+              "fullTitle": "Login spec Should disable submit when password is missing",
+              "timedOut": null,
+              "duration": 576,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/login');\ncy.get('input[formControlName=email]').type(_common_fixtures_user_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.userFixtures.username);\ncy.get('button[type=submit]').should('be.disabled');",
+              "err": {},
+              "uuid": "46075c03-894a-4071-b031-4637b6054602",
+              "parentUUID": "43698498-30ae-47d0-9bd9-237a54682681",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "2bf4f16e-cf99-48c5-bc41-29bf8611a8cf",
+            "e049c0cb-b492-4e1a-829c-37c1fdaed15a",
+            "2a1fe76c-d7af-4953-b41e-0295729aadcf",
+            "a0de6cd9-2856-40f8-9600-da921b93017d",
+            "46075c03-894a-4071-b031-4637b6054602"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 5236,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

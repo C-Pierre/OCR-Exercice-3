@@ -1,8 +1,8 @@
 import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { expect } from '@jest/globals';
 import { AppComponent } from './app.component';
-import { SessionService } from './core/service/session.service';
-import { AuthService } from './core/service/auth.service';
+import { SessionService } from './core/service/auth/session.service';
+import { AuthService } from './core/service/auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';

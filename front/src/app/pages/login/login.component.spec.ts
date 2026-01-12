@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from '@jest/globals';
 import { LoginComponent } from './login.component';
-import { SessionService } from 'src/app/core/service/session.service';
-import { AuthService } from 'src/app/core/service/auth.service';
+import { SessionService } from 'src/app/core/service/auth/session.service';
+import { AuthService } from 'src/app/core/service/auth/auth.service';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SessionInformation } from 'src/app/core/models/sessionInformation.interface';
+import { SessionInformation } from 'src/app/core/models/auth/sessionInformation.interface';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;

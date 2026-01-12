@@ -1,0 +1,162 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-01-13T18:53:30.719Z",
+    "end": "2026-01-13T18:53:37.654Z",
+    "duration": 6935,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "2d597681-e035-4ac2-9073-a4d35dd024cf",
+      "title": "",
+      "fullFile": "cypress/e2e/app/pages/sessions/list/sessions.list.cy.ts",
+      "file": "cypress/e2e/app/pages/sessions/list/sessions.list.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "7e3b691e-2669-4f18-84e3-1edfc16ae0c2",
+          "title": "Sessions List page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should display sessions information",
+              "fullTitle": "Sessions List page Should display sessions information",
+              "timedOut": null,
+              "duration": 1681,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('Sessions available');\ncy.contains(_common_fixtures_sessions_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.sessionsFixtures[0].name);",
+              "err": {},
+              "uuid": "a1d4c419-a0ba-4541-b3a4-66fdea6f6b53",
+              "parentUUID": "7e3b691e-2669-4f18-84e3-1edfc16ae0c2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should acces to create session form and go back",
+              "fullTitle": "Sessions List page Should acces to create session form and go back",
+              "timedOut": null,
+              "duration": 1462,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('button', 'Create').click();\ncy.url().should('include', '/sessions/create');\ncy.contains(\"Create session\");\ncy.contains('button', 'arrow_back').click();\ncy.url().should('include', '/sessions');",
+              "err": {},
+              "uuid": "44453972-a25a-4567-aae1-cec54296f0db",
+              "parentUUID": "7e3b691e-2669-4f18-84e3-1edfc16ae0c2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should acces to detail session go back",
+              "fullTitle": "Sessions List page Should acces to detail session go back",
+              "timedOut": null,
+              "duration": 1525,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('button', 'Detail').click();\ncy.url().should('include', '/sessions/detail/' + _common_fixtures_sessions_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.sessionsFixtures[0].id);\ncy.contains(_common_fixtures_sessions_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.sessionsFixtures[0].name);\ncy.contains('button', 'arrow_back').click();\ncy.url().should('include', '/sessions');",
+              "err": {},
+              "uuid": "856b937c-fe82-44da-8e6e-1f5b23dfc05a",
+              "parentUUID": "7e3b691e-2669-4f18-84e3-1edfc16ae0c2",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should acces to edit session go back",
+              "fullTitle": "Sessions List page Should acces to edit session go back",
+              "timedOut": null,
+              "duration": 1491,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('button', 'Edit').click();\ncy.url().should('include', '/sessions/update/' + _common_fixtures_sessions_fixtures_cy_ts__WEBPACK_IMPORTED_MODULE_0__.sessionsFixtures[0].id);\ncy.contains('Update session');\ncy.contains('button', 'Save');\ncy.contains('button', 'arrow_back').click();\ncy.url().should('include', '/sessions');",
+              "err": {},
+              "uuid": "9d2e38d7-d670-48b3-bb16-c46fa830f858",
+              "parentUUID": "7e3b691e-2669-4f18-84e3-1edfc16ae0c2",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "a1d4c419-a0ba-4541-b3a4-66fdea6f6b53",
+            "44453972-a25a-4567-aae1-cec54296f0db",
+            "856b937c-fe82-44da-8e6e-1f5b23dfc05a",
+            "9d2e38d7-d670-48b3-bb16-c46fa830f858"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 6159,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormComponent } from './form.component';
-import { SessionService } from '../../../../core/service/session.service';
-import { SessionApiService } from '../../../../core/service/session-api.service';
-import { TeacherService } from '../../../../core/service/teacher.service';
+import { SessionService } from '../../../../core/service/auth/session.service';
+import { SessionApiService } from '../../../../core/service/session/session-api.service';
+import { TeacherService } from '../../../../core/service/teacher/teacher.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';

@@ -5,7 +5,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { BehaviorSubject } from 'rxjs';
 import { Component } from '@angular/core';
 import { UnauthGuard } from './unauth.guard';
-import { SessionService } from '../core/service/session.service';
+import { SessionService } from '../core/service/auth/session.service';
 import { expect } from '@jest/globals';
 
 @Component({ standalone: true, template: '<p>dummy</p>' })

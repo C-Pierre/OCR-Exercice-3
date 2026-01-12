@@ -1,6 +1,6 @@
 import { expect } from '@jest/globals';
 import { TestBed } from '@angular/core/testing';
-import { Session } from '../models/session.interface';
+import { Session } from '../../models/session/session.interface';
 import { provideHttpClient } from '@angular/common/http';
 import { SessionApiService } from './session-api.service';
 import { environment } from 'src/environments/environment';

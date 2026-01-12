@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RegisterComponent } from './register.component';
-import { AuthService } from '../../core/service/auth.service';
+import { AuthService } from '../../core/service/auth/auth.service';
 import { Router } from '@angular/router';
 import { of, throwError } from 'rxjs';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';

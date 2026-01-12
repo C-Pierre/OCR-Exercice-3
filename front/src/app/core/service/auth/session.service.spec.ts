@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { SessionService } from './session.service';
-import { SessionInformation } from '../models/sessionInformation.interface';
+import { SessionInformation } from '../../models/auth/sessionInformation.interface';
 import { firstValueFrom } from 'rxjs';
 import { expect } from '@jest/globals';
 

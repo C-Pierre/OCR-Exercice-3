@@ -4,8 +4,8 @@ import { HttpTestingController } from '@angular/common/http/testing';
 import { provideHttpClient } from '@angular/common/http';
 import { provideHttpClientTesting } from '@angular/common/http/testing';
 import { environment } from 'src/environments/environment';
-import { LoginRequest } from '../models/loginRequest.interface';
-import { RegisterRequest } from '../models/registerRequest.interface';
+import { LoginRequest } from '../../models/auth/loginRequest.interface';
+import { RegisterRequest } from '../../models/auth/registerRequest.interface';
 import { expect } from '@jest/globals';
 
 describe('AuthService', () => {

@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-01-13T18:52:57.126Z",
+    "end": "2026-01-13T18:52:57.721Z",
+    "duration": 595,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "d228e0c6-46c7-4968-b63e-0d43bc4a346b",
+      "title": "",
+      "fullFile": "cypress/e2e/app/pages/not-found/not-found.cy.ts",
+      "file": "cypress/e2e/app/pages/not-found/not-found.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "70bf4b20-8a93-4959-b9fe-01e8c07ba050",
+          "title": "NotFound page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should display Not Found page when navigating to unknown route",
+              "fullTitle": "NotFound page should display Not Found page when navigating to unknown route",
+              "timedOut": null,
+              "duration": 371,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/this-route-does-not-exist', { failOnStatusCode: false });\ncy.url().should('include', '/404');\ncy.get('h1')\n    .should('be.visible')\n    .and('have.text', 'Page not found !');\ncy.get('h1').should('have.length', 1);\ncy.get('h1').should('have.text', 'Page not found !');",
+              "err": {},
+              "uuid": "1070559c-708b-4f79-8a61-2714907eec1e",
+              "parentUUID": "70bf4b20-8a93-4959-b9fe-01e8c07ba050",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "1070559c-708b-4f79-8a61-2714907eec1e"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 371,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

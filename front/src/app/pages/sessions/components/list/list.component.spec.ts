@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { expect } from '@jest/globals';
 import { ListComponent } from './list.component';
-import { SessionApiService } from '../../../../core/service/session-api.service';
-import { SessionService } from '../../../../core/service/session.service';
+import { SessionApiService } from '../../../../core/service/session/session-api.service';
+import { SessionService } from '../../../../core/service/auth/session.service';
 import { of } from 'rxjs';
 import { HttpClientModule } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
