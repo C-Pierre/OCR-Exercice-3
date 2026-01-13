@@ -8,5 +8,7 @@ public interface TeacherRepositoryPort {
 
     Teacher getById(Long id) throws NotFoundException;
 
+    Teacher getByLastName(String lastName) throws NotFoundException;
+
     List<Teacher> findAll();
 }

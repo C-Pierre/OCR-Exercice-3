@@ -1,4 +1,4 @@
-package com.openclassrooms.starterjwt.security.jwt;
+package com.openclassrooms.starterjwt.security.jwt.response;
 
 import lombok.Getter;
 import lombok.Setter;

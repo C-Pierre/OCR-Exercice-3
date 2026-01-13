@@ -21,7 +21,7 @@ describe('DetailComponent', () => {
     createdAt: new Date(),
     updatedAt: new Date(),
     teacherId: 10,
-    users: [1, 2, 3]
+    users: []
   };
 
   const mockTeacher = {
@@ -60,7 +60,7 @@ describe('DetailComponent', () => {
 
   const mockActivatedRoute = {
     snapshot: { paramMap: { get: () => '1' } },
-    root: {} // 👈 nécessaire pour inject(ActivatedRoute)
+    root: {}
   };
 
   beforeEach(async () => {
@@ -135,11 +135,9 @@ describe('DetailComponent', () => {
     expect(nextSpy).toHaveBeenCalled();
   });
 
-  it('should correctly set isParticipate$', (done) => {
-    component.isParticipate$.subscribe(isParticipating => {
-      expect(isParticipating).toBe(true);
-      done();
-    });
+  it('should correctly set isParticipate$', async () => {
+    await component.participate();
+    expect(mockSessionApiService.participate).toHaveBeenCalledWith(component.sessionId, component.userId);
   });
 
   it('should load session and teacher details on init', async () => {

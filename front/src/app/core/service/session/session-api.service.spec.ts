@@ -39,7 +39,7 @@ describe('SessionApiService', () => {
       name: 'Math',
       description: 'Cours de mathématiques',
       teacherId: 42,
-      users: [99, 100],
+      users: [],
       date: new Date('2026-01-10T10:00:00Z')
     } as Session];
 
@@ -59,7 +59,7 @@ describe('SessionApiService', () => {
       name: 'Math',
       description: 'Cours de mathématiques',
       teacherId: 42,
-      users: [99, 100],
+      users: [],
       date: new Date('2026-01-10T10:00:00Z')
     };
 
@@ -90,7 +90,7 @@ describe('SessionApiService', () => {
       name: 'Math',
       description: 'Cours de mathématiques',
       teacherId: 42,
-      users: [99, 100],
+      users: [],
       date: new Date('2026-01-10T10:00:00Z')
     };
 
@@ -111,7 +111,7 @@ describe('SessionApiService', () => {
       name: 'Math',
       description: 'Cours de mathématiques',
       teacherId: 42,
-      users: [99, 100],
+      users: [],
       date: new Date('2026-01-10T10:00:00Z')
     };
 

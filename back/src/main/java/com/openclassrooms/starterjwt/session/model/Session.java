@@ -45,20 +45,20 @@ public class Session {
     @Column(nullable = false)
     private Date date;
 
-    @NotNull
+    @NotBlank
     @Size(max = 2500)
     @Column(nullable = false)
     private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_id", referencedColumnName = "id")
+    @ManyToOne()
+    @JoinColumn(name = "teacher_id", referencedColumnName = "id", nullable = false)
     private Teacher teacher;
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
-        name = "PARTICIPATE",
-        joinColumns = @JoinColumn(name = "session_id"),
-        inverseJoinColumns = @JoinColumn(name = "user_id")
+            name = "PARTICIPATE",
+            joinColumns = @JoinColumn(name = "session_id"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
     )
     private List<User> users;
 

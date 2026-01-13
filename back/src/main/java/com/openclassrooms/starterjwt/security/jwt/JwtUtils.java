@@ -1,6 +1,5 @@
 package com.openclassrooms.starterjwt.security.jwt;
 
-import com.openclassrooms.starterjwt.common.exception.ExpiredJwtException;
 import com.openclassrooms.starterjwt.security.service.UserDetailsImpl;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.SignatureException;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.openclassrooms.starterjwt.security.jwt.JwtResponse;
+import com.openclassrooms.starterjwt.security.jwt.response.JwtResponse;
 import com.openclassrooms.starterjwt.auth.request.LoginRequest;
 import com.openclassrooms.starterjwt.auth.request.SignupRequest;
 import com.openclassrooms.starterjwt.auth.service.AuthLoginService;
