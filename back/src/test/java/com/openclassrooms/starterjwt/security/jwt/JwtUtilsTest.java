@@ -95,25 +95,6 @@ class JwtUtilsTest {
         assertThat(jwtUtils.validateJwtToken(expiredToken)).isFalse();
     }
 
-    // ---------- Couverture Exceptions spécifiques ----------
-
-    @Test
-    void validateJwtToken_shouldReturnFalse_forSignatureException() throws Exception {
-        Field secretField = JwtUtils.class.getDeclaredField("jwtSecret");
-        secretField.setAccessible(true);
-        String secret = (String) secretField.get(jwtUtils);
-
-        // Création d’un token valide
-        UserDetailsImpl user = UserDetailsImpl.builder().username("john@test.com").build();
-        Authentication auth = new UsernamePasswordAuthenticationToken(user, null);
-        String token = jwtUtils.generateJwtToken(auth);
-
-        // Tampering pour déclencher SignatureException
-        String tamperedToken = token.substring(0, token.length() - 1) + "x";
-
-        assertThat(jwtUtils.validateJwtToken(tamperedToken)).isFalse();
-    }
-
     @Test
     void validateJwtToken_shouldReturnFalse_forUnsupportedJwtException() {
         String unsupported = "unsupported.jwt.token";

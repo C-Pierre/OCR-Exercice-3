@@ -1,0 +1,162 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-01-20T12:49:24.861Z",
+    "end": "2026-01-20T12:49:34.469Z",
+    "duration": 9608,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "115ca1a6-1452-40d1-b2df-20cef70b1f80",
+      "title": "",
+      "fullFile": "cypress/e2e/app/pages/sessions/list/sessions.list.cy.ts",
+      "file": "cypress/e2e/app/pages/sessions/list/sessions.list.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "6e934dbd-edb5-44f5-a7f8-28481631a2c3",
+          "title": "Sessions List page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should display sessions information",
+              "fullTitle": "Sessions List page Should display sessions information",
+              "timedOut": null,
+              "duration": 2404,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('Sessions available');\ncy.contains(session.name);",
+              "err": {},
+              "uuid": "e30004d1-11ee-4be1-ac48-95709afaca39",
+              "parentUUID": "6e934dbd-edb5-44f5-a7f8-28481631a2c3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should acces to create session form and go back",
+              "fullTitle": "Sessions List page Should acces to create session form and go back",
+              "timedOut": null,
+              "duration": 2273,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('button', 'Create').click();\ncy.url().should('include', '/sessions/create');\ncy.contains(\"Create session\");\ncy.contains('button', 'arrow_back').click();\ncy.url().should('include', '/sessions');",
+              "err": {},
+              "uuid": "40e286e1-12a2-47d7-8e38-0684e0e030b6",
+              "parentUUID": "6e934dbd-edb5-44f5-a7f8-28481631a2c3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should acces to detail session go back",
+              "fullTitle": "Sessions List page Should acces to detail session go back",
+              "timedOut": null,
+              "duration": 2377,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('button', 'Detail').click();\ncy.url().should('include', '/sessions/detail/' + session.id);\ncy.contains(session.name);\ncy.contains('button', 'arrow_back').click();\ncy.url().should('include', '/sessions');",
+              "err": {},
+              "uuid": "22bf2501-ceb2-4658-a751-e0f45b1e554d",
+              "parentUUID": "6e934dbd-edb5-44f5-a7f8-28481631a2c3",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should acces to edit session go back",
+              "fullTitle": "Sessions List page Should acces to edit session go back",
+              "timedOut": null,
+              "duration": 2357,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('button', 'Edit').click();\ncy.url().should('include', '/sessions/update/' + session.id);\ncy.contains('Update session');\ncy.contains('button', 'Save');\ncy.contains('button', 'arrow_back').click();\ncy.url().should('include', '/sessions');",
+              "err": {},
+              "uuid": "eeefbcc1-b340-49ba-b364-e51b20744782",
+              "parentUUID": "6e934dbd-edb5-44f5-a7f8-28481631a2c3",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "e30004d1-11ee-4be1-ac48-95709afaca39",
+            "40e286e1-12a2-47d7-8e38-0684e0e030b6",
+            "22bf2501-ceb2-4658-a751-e0f45b1e554d",
+            "eeefbcc1-b340-49ba-b364-e51b20744782"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 9411,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}
