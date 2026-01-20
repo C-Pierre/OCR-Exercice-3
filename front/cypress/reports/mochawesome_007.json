@@ -1,0 +1,143 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-01-20T12:49:13.784Z",
+    "end": "2026-01-20T12:49:23.036Z",
+    "duration": 9252,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "18292156-2353-4bbb-a977-610106029912",
+      "title": "",
+      "fullFile": "cypress/e2e/app/pages/sessions/form/sessions.form.update.cy.ts",
+      "file": "cypress/e2e/app/pages/sessions/form/sessions.form.update.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "9c9dccba-89d6-4fb7-9713-b63543d20349",
+          "title": "Session Update page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should disable submit and show errors when fields are invalid",
+              "fullTitle": "Session Update page Should disable submit and show errors when fields are invalid",
+              "timedOut": null,
+              "duration": 3665,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/sessions');\ncy.contains('.mat-mdc-card-header-text', session.name)\n    .parents('.mat-mdc-card.mdc-card.item')\n    .find('button')\n    .contains('Edit')\n    .click();\ncy.get('input[formControlName=name]').clear();\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('input[formControlName=name]').type(session.name);\ncy.get('input[formControlName=date]').clear();\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('input[formControlName=date]').type(session.date);\ncy.get('textarea[formControlName=description]').clear();\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('textarea[formControlName=description]').type(session.descrition);\ncy.get('button[type=submit]').should('not.be.disabled');",
+              "err": {},
+              "uuid": "5c7452d3-8df2-4221-b00c-176c8e9c3e98",
+              "parentUUID": "9c9dccba-89d6-4fb7-9713-b63543d20349",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should commplete and submit when valid then go back and see new session in list",
+              "fullTitle": "Session Update page Should commplete and submit when valid then go back and see new session in list",
+              "timedOut": null,
+              "duration": 3666,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.visit('/sessions');\ncy.contains('.mat-mdc-card-header-text', session.name)\n    .parents('.mat-mdc-card.mdc-card.item')\n    .find('button')\n    .contains('Edit')\n    .click();\ncy.get('input[formControlName=name]').type(session.name + '_update');\ncy.get('input[formControlName=date]').type(session.date);\ncy.get('[formControlName=teacherId]').click();\ncy.get('#mat-option-1').click();\ncy.get('textarea[formControlName=description]').type(session.descrition + '_update');\ncy.get('button[type=submit]').click();\ncy.url().should('include', '/sessions');\ncy.contains(session.name);",
+              "err": {},
+              "uuid": "90cee1eb-1319-431b-8574-a6f09f1e3076",
+              "parentUUID": "9c9dccba-89d6-4fb7-9713-b63543d20349",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should access detail new session and delete it then go back",
+              "fullTitle": "Session Update page Should access detail new session and delete it then go back",
+              "timedOut": null,
+              "duration": 1735,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.contains('.mat-mdc-card-header-text', session.name + '_update')\n    .parents('.mat-mdc-card.mdc-card.item')\n    .find('button')\n    .contains('Detail')\n    .click();\ncy.contains('button', 'Delete').click();\ncy.url().should('include', '/sessions');",
+              "err": {},
+              "uuid": "017f5803-c7fe-4931-bee3-66c703d3c210",
+              "parentUUID": "9c9dccba-89d6-4fb7-9713-b63543d20349",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "5c7452d3-8df2-4221-b00c-176c8e9c3e98",
+            "90cee1eb-1319-431b-8574-a6f09f1e3076",
+            "017f5803-c7fe-4931-bee3-66c703d3c210"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 9066,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

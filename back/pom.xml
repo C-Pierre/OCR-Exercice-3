@@ -95,6 +95,12 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>
@@ -141,28 +147,37 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
-            </plugin>
-            <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
-                <version>0.8.5</version>
+                <version>0.8.13</version>
                 <executions>
+                    <!-- prépare l'agent pour la phase test -->
                     <execution>
                         <goals>
                             <goal>prepare-agent</goal>
                         </goals>
                     </execution>
-                    <!-- attached to Maven test phase -->
+
+                    <!-- génère le rapport -->
                     <execution>
                         <id>report</id>
                         <phase>test</phase>
                         <goals>
                             <goal>report</goal>
                         </goals>
+                        <configuration>
+                            <excludes>
+                                <!-- Exclure tous les DTOs et classes de configuration -->
+                                <exclude>com/openclassrooms/starterjwt/**/dto/**</exclude>
+                                <exclude>com/openclassrooms/starterjwt/**/response/**</exclude>
+                                <exclude>com/openclassrooms/starterjwt/**/configuration/**</exclude>
+                                <exclude>com/openclassrooms/starterjwt/**/exception/**</exclude>
+                                <exclude>com/openclassrooms/starterjwt/security/jwt/JwtResponse.class</exclude>
+                            </excludes>
+                        </configuration>
                     </execution>
 
+                    <!-- vérifie les règles de coverage -->
                     <execution>
                         <id>jacoco-check</id>
                         <goals>
@@ -181,11 +196,18 @@
                                     </limits>
                                 </rule>
                             </rules>
+                            <excludes>
+                                <exclude>com/openclassrooms/starterjwt/**/dto/**</exclude>
+                                <exclude>com/openclassrooms/starterjwt/**/response/**</exclude>
+                                <exclude>com/openclassrooms/starterjwt/**/configuration/**</exclude>
+                                <exclude>com/openclassrooms/starterjwt/**/exception/**</exclude>
+                                <exclude>com/openclassrooms/starterjwt/security/jwt/JwtResponse.class</exclude>
+                            </excludes>
                         </configuration>
                     </execution>
-
                 </executions>
             </plugin>
+
         </plugins>
     </build>
 
