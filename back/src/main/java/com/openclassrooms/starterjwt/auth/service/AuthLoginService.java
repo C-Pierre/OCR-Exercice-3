@@ -4,7 +4,7 @@ import org.springframework.stereotype.Service;
 import com.openclassrooms.starterjwt.user.model.User;
 import org.springframework.security.core.Authentication;
 import com.openclassrooms.starterjwt.security.jwt.JwtUtils;
-import com.openclassrooms.starterjwt.security.jwt.JwtResponse;
+import com.openclassrooms.starterjwt.security.jwt.response.JwtResponse;
 import com.openclassrooms.starterjwt.auth.request.LoginRequest;
 import com.openclassrooms.starterjwt.security.service.UserDetailsImpl;
 import org.springframework.security.core.context.SecurityContextHolder;

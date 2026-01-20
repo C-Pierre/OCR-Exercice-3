@@ -1,6 +1,5 @@
-import 'jest-preset-angular/setup-jest';
+import { setupZoneTestEnv } from 'jest-preset-angular/setup-env/zone';
 
-/* global mocks for jsdom */
 const mock = () => {
   let storage: { [key: string]: string } = {};
   return {
@@ -26,5 +25,7 @@ Object.defineProperty(document.body.style, 'transform', {
   },
 });
 
-/* output shorter and more meaningful Zone error stack traces */
-// Error.stackTraceLimit = 2;
+jest.spyOn(console, 'error').mockImplementation(() => {});
+
+// Setup Angular + Zone.js environment for Jest
+setupZoneTestEnv();

@@ -9,6 +9,8 @@ public interface SessionRepositoryPort {
 
     Session getById(Long id) throws NotFoundException;
 
+    Session getByNameAndTeacherId(String name, Long teacherId) throws NotFoundException;
+
     void save(Session session);
 
     void delete(Session session);

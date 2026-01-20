@@ -86,6 +86,7 @@ export class FormComponent implements OnInit {
       this.router.navigate(['/sessions']);
       return;
     }
+
     const url = this.router.url;
     if (url.includes('update')) {
       this.onUpdate = true;
@@ -93,7 +94,6 @@ export class FormComponent implements OnInit {
       const session = await firstValueFrom(
         this.sessionApiService.detail(this.id)
       );
-
       this.initForm(session);
     } else {
       this.initForm();
@@ -101,7 +101,11 @@ export class FormComponent implements OnInit {
   }
 
   public async submit(): Promise<void> {
-    const session = this.sessionForm?.value as Session;
+    if (!this.sessionForm || this.sessionForm.invalid) {
+      return;
+    }
+
+    const session = this.sessionForm.value as Session;
 
     try {
       if (!this.onUpdate) {

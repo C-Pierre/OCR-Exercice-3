@@ -1,0 +1,124 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 2,
+    "passes": 2,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-01-20T12:49:05.074Z",
+    "end": "2026-01-20T12:49:11.989Z",
+    "duration": 6915,
+    "testsRegistered": 2,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "a70a4c75-9063-4788-82be-7005e599411c",
+      "title": "",
+      "fullFile": "cypress/e2e/app/pages/sessions/form/sessions.form.create.cy.ts",
+      "file": "cypress/e2e/app/pages/sessions/form/sessions.form.create.cy.ts",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "27c0e9d5-95e4-4851-b3e2-0cdc391ebda9",
+          "title": "Session Create page",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "Should disable submit and show errors when fields are invalid",
+              "fullTitle": "Session Create page Should disable submit and show errors when fields are invalid",
+              "timedOut": null,
+              "duration": 3553,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('button[type=submit]').should('be.disabled');\ncy.get('input[formControlName=name]').type(session.name);\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('input[formControlName=date]').type(session.date);\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('[formControlName=teacherId]').click();\ncy.get('#mat-option-0').click();\ncy.get('button[type=submit]').should('be.disabled');\ncy.get('textarea[formControlName=description]').type(session.descrition);\ncy.get('button[type=submit]').should('not.be.disabled');",
+              "err": {},
+              "uuid": "ec823052-5a5f-4ce6-a098-80e5f29cf4f3",
+              "parentUUID": "27c0e9d5-95e4-4851-b3e2-0cdc391ebda9",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "Should commplete and submit when valid then go back and see new session in list",
+              "fullTitle": "Session Create page Should commplete and submit when valid then go back and see new session in list",
+              "timedOut": null,
+              "duration": 3228,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.get('input[formControlName=name]').type(session.name);\ncy.get('input[formControlName=date]').type(session.date);\ncy.get('[formControlName=teacherId]').click();\ncy.get('#mat-option-0').click();\ncy.get('textarea[formControlName=description]').type(session.descrition);\ncy.get('button[type=submit]').click();\ncy.url().should('include', '/sessions');\ncy.contains(session.name);",
+              "err": {},
+              "uuid": "654d1663-dd6c-458a-a5bb-d7e83f67b5a6",
+              "parentUUID": "27c0e9d5-95e4-4851-b3e2-0cdc391ebda9",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "ec823052-5a5f-4ce6-a098-80e5f29cf4f3",
+            "654d1663-dd6c-458a-a5bb-d7e83f67b5a6"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 6781,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}

@@ -23,6 +23,12 @@ public class TeacherRepositoryAdapter implements TeacherRepositoryPort {
     }
 
     @Override
+    public Teacher getByLastName(String lastName) {
+        return teacherRepository.findByLastName(lastName)
+                .orElseThrow(() -> new NotFoundException("User not found with lastname: " + lastName));
+    }
+
+    @Override
     public List<Teacher> findAll() {
         return teacherRepository.findAll();
     }

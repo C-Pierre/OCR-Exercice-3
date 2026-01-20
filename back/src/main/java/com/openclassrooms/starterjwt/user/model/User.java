@@ -9,13 +9,13 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.Accessors;
@@ -36,7 +36,6 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode(of = {"id"})
 @Builder
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 @ToString
 public class User {
@@ -44,23 +43,23 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NonNull
+    @NotBlank
     @Size(max = 50)
     @Email
     @Column(nullable = false)
     private String email;
 
-    @NonNull
+    @NotBlank
     @Size(max = 20)
     @Column(nullable = false)
     private String lastName;
 
-    @NonNull
+    @NotBlank
     @Size(max = 20)
     @Column(nullable = false)
     private String firstName;
 
-    @NonNull
+    @NotBlank
     @Size(max = 120)
     @Column(nullable = false)
     private String password;
@@ -74,5 +73,4 @@ public class User {
     @UpdateTimestamp
     @Column(columnDefinition="TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime updatedAt;
-
 }

@@ -23,6 +23,14 @@ public class SessionRepositoryAdapter implements SessionRepositoryPort {
     }
 
     @Override
+    public Session getByNameAndTeacherId(String name, Long teacherId) {
+        return sessionRepository.findByNameAndTeacherId(name, teacherId)
+            .orElseThrow(
+                () -> new NotFoundException("Session not found with name: " + name + " and teacher_id: " + teacherId)
+            );
+    }
+
+    @Override
     public void save(Session session) {
         sessionRepository.save(session);
     }

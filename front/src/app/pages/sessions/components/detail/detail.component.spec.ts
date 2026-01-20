@@ -1,46 +1,172 @@
-import { HttpClientModule } from '@angular/common/http';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { RouterTestingModule, } from '@angular/router/testing';
-import { expect } from '@jest/globals';
-import { SessionService } from '../../../../core/service/auth/session.service';
-
 import { DetailComponent } from './detail.component';
-
+import { SessionService } from '../../../../core/service/auth/session.service';
+import { SessionApiService } from '../../../../core/service/session/session-api.service';
+import { TeacherService } from '../../../../core/service/teacher/teacher.service';
+import { Router, ActivatedRoute } from '@angular/router';
+import { of } from 'rxjs';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { RouterTestingModule } from '@angular/router/testing';
+import { expect } from '@jest/globals';
 
 describe('DetailComponent', () => {
   let component: DetailComponent;
   let fixture: ComponentFixture<DetailComponent>;
-  let service: SessionService;
+
+  const mockSession = {
+    id: 1,
+    name: 'Yoga',
+    description: 'Session description',
+    date: new Date(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
+    teacherId: 10,
+    users: []
+  };
+
+  const mockTeacher = {
+    id: 10,
+    firstName: 'Jane',
+    lastName: 'Doe',
+    createdAt: new Date(),
+    updatedAt: new Date()
+  };
 
   const mockSessionService = {
     sessionInformation: {
+      id: 1,
       admin: true,
-      id: 1
-    }
-  }
+      token: 'fake-token',
+      type: 'user',
+      username: 'jdoe',
+      firstName: 'John',
+      lastName: 'Doe'
+    },
+    isLogged$: of(true)
+  };
+
+  const mockSessionApiService = {
+    detail: jest.fn().mockReturnValue(of(mockSession)),
+    delete: jest.fn().mockReturnValue(of(null)),
+    participate: jest.fn().mockReturnValue(of(null)),
+    unParticipate: jest.fn().mockReturnValue(of(null))
+  };
+
+  const mockTeacherService = {
+    detail: jest.fn().mockReturnValue(of(mockTeacher))
+  };
+
+  const mockRouter = { navigate: jest.fn() };
+
+  const mockActivatedRoute = {
+    snapshot: { paramMap: { get: () => '1' } },
+    root: {}
+  };
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule,
-        HttpClientModule,
-        MatSnackBarModule,
-        ReactiveFormsModule
+      imports: [DetailComponent, RouterTestingModule],
+      providers: [
+        { provide: SessionService, useValue: mockSessionService },
+        { provide: SessionApiService, useValue: mockSessionApiService },
+        { provide: TeacherService, useValue: mockTeacherService },
+        { provide: Router, useValue: mockRouter },
+        { provide: ActivatedRoute, useValue: mockActivatedRoute }
       ],
-      declarations: [DetailComponent],
-      providers: [{ provide: SessionService, useValue: mockSessionService }],
-    })
-      .compileComponents();
-      service = TestBed.inject(SessionService);
+      schemas: [NO_ERRORS_SCHEMA]
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DetailComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('should create the component', () => {
     expect(component).toBeTruthy();
   });
-});
 
+  it('should load session$ and teacher$', (done) => {
+    let sessionLoaded = false;
+    let teacherLoaded = false;
+
+    component.session$.subscribe(session => {
+      expect(session).toEqual(mockSession);
+      expect(mockSessionApiService.detail).toHaveBeenCalledWith(component.sessionId);
+      sessionLoaded = true;
+      if (sessionLoaded && teacherLoaded) done();
+    });
+
+    component.teacher$.subscribe(teacher => {
+      expect(teacher).toEqual(mockTeacher);
+      expect(mockTeacherService.detail).toHaveBeenCalledWith(mockSession.teacherId.toString());
+      teacherLoaded = true;
+      if (sessionLoaded && teacherLoaded) done();
+    });
+  });
+
+  it('should call window.history.back() on back()', () => {
+    const spy = jest.spyOn(window.history, 'back').mockImplementation(() => {});
+    component.back();
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
+  });
+
+  it('should delete session and navigate', async () => {
+    await component.delete();
+    expect(mockSessionApiService.delete).toHaveBeenCalledWith(component.sessionId);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['sessions']);
+  });
+
+  it('should participate and refresh session$', async () => {
+    const nextSpy = jest.spyOn(component['refresh$'], 'next');
+    await component.participate();
+    expect(mockSessionApiService.participate).toHaveBeenCalledWith(component.sessionId, component.userId);
+    expect(nextSpy).toHaveBeenCalled();
+  });
+
+  it('should unParticipate and refresh session$', async () => {
+    const nextSpy = jest.spyOn(component['refresh$'], 'next');
+    await component.unParticipate();
+    expect(mockSessionApiService.unParticipate).toHaveBeenCalledWith(component.sessionId, component.userId);
+    expect(nextSpy).toHaveBeenCalled();
+  });
+
+  it('should correctly set isParticipate$', async () => {
+    await component.participate();
+    expect(mockSessionApiService.participate).toHaveBeenCalledWith(component.sessionId, component.userId);
+  });
+
+  it('should load session and teacher details on init', async () => {
+    component.ngOnInit();
+    component.session$.subscribe(session => {
+      expect(session).toEqual(mockSession);
+    });
+    component.teacher$.subscribe(teacher => {
+      expect(teacher).toEqual(mockTeacher);
+    });
+  });
+
+  it('should call delete and navigate when delete is invoked', async () => {
+    await component.delete();
+    expect(mockSessionApiService.delete).toHaveBeenCalledWith(component.sessionId);
+    expect(mockRouter.navigate).toHaveBeenCalledWith(['sessions']);
+  });
+
+  it('should call participate and refresh session on participate()', async () => {
+    const nextSpy = jest.spyOn(component['refresh$'], 'next');
+    await component.participate();
+    expect(mockSessionApiService.participate).toHaveBeenCalled();
+    expect(nextSpy).toHaveBeenCalled();
+  });
+
+  it('should call unParticipate and refresh session on unParticipate()', async () => {
+    const nextSpy = jest.spyOn(component['refresh$'], 'next');
+    await component.unParticipate();
+    expect(mockSessionApiService.unParticipate).toHaveBeenCalled();
+    expect(nextSpy).toHaveBeenCalled();
+  });
+});

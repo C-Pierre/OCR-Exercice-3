@@ -3,7 +3,7 @@ import {Injectable} from "@angular/core";
 import {CanActivate, Router} from "@angular/router";
 import { SessionService } from "../core/service/auth/session.service";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class UnauthGuard implements CanActivate {
 
   constructor(
@@ -12,11 +12,11 @@ export class UnauthGuard implements CanActivate {
   ) {
   }
 
-  public async canActivate(): Promise<boolean>  {
+  public async canActivate(): Promise<boolean> {
     const logged = await firstValueFrom(this.sessionService.isLogged$);
-    
+
     if (logged) {
-      this.router.navigate(['login']);
+      this.router.navigate(['/']);
       return false;
     }
 

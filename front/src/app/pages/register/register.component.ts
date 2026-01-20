@@ -6,6 +6,7 @@ import { RegisterRequest } from '../../core/models/auth/registerRequest.interfac
 import { MaterialModule } from "../../shared/material.module";
 import { CommonModule } from "@angular/common";
 import { firstValueFrom } from 'rxjs';
+
 @Component({
   selector: 'app-register',
   imports: [CommonModule, MaterialModule],
@@ -45,6 +46,7 @@ export class RegisterComponent {
   private authService = inject(AuthService);
   private fb = inject(FormBuilder);
   private router = inject(Router);
+
   public onError = false;
 
   public form = this.fb.group({
@@ -69,5 +71,4 @@ export class RegisterComponent {
         this.onError = true;
       }
   }
-
 }
