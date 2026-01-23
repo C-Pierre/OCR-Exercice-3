@@ -65,4 +65,44 @@ describe('UserService', () => {
 
     req.flush(null);
   });
+
+  describe('Integration tests (user flow)', () => {
+
+    it('should get user and then delete it', () => {
+      service.getById('1').subscribe(result => {
+        expect(result).toEqual(mockUser);
+      });
+      const getReq = httpMock.expectOne(`${baseUrl}/1`);
+      expect(getReq.request.method).toBe('GET');
+      getReq.flush(mockUser);
+
+      service.delete('1').subscribe(result => {
+        expect(result).toBeNull();
+      });
+      const deleteReq = httpMock.expectOne(`${baseUrl}/1`);
+      expect(deleteReq.request.method).toBe('DELETE');
+      deleteReq.flush(null);
+    });
+
+    it('should handle error when getting non-existent user', () => {
+      service.getById('999').subscribe({
+        next: () => fail('should not succeed'),
+        error: err => expect(err.status).toBe(404)
+      });
+
+      const req = httpMock.expectOne(`${baseUrl}/999`);
+      req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+    });
+
+    it('should handle error when deleting non-existent user', () => {
+      service.delete('999').subscribe({
+        next: () => fail('should not succeed'),
+        error: err => expect(err.status).toBe(404)
+      });
+
+      const req = httpMock.expectOne(`${baseUrl}/999`);
+      req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+    });
+
+  });
 });

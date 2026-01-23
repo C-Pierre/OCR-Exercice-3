@@ -74,4 +74,39 @@ describe('UnauthGuard', () => {
     await router.navigate(['/unauth']);
     expect(location.path()).toBe('/unauth');
   });
+
+  describe('UnauthGuard – Integration tests (Router)', () => {
+
+  beforeEach(async () => {
+    router.initialNavigation();
+  });
+
+  it('should prevent navigation and stay on "/" when logged user navigates to /unauth', async () => {
+    isLogged$.next(true);
+
+    await router.navigateByUrl('/unauth');
+
+    expect(location.path()).toBe('/');
+  });
+
+  it('should allow navigation to /unauth when user is not logged', async () => {
+    isLogged$.next(false);
+
+    await router.navigateByUrl('/unauth');
+
+    expect(location.path()).toBe('/unauth');
+  });
+
+  it('should allow returning to unauth page after logout', async () => {
+    isLogged$.next(true);
+    await router.navigateByUrl('/unauth');
+    expect(location.path()).toBe('/');
+
+    isLogged$.next(false);
+    await router.navigateByUrl('/unauth');
+
+    expect(location.path()).toBe('/unauth');
+  });
 });
+});
+

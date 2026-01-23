@@ -60,7 +60,7 @@ describe('SessionService', () => {
     expect(service.sessionInformation).toBeUndefined();
   });
 
-  it('should reflect hasSession() correctly', async () => {
+  it('should reflect hasSession() correctly', () => {
     expect(service['hasSession']()).toBe(false);
 
     service.logIn(mockSession);
@@ -68,5 +68,56 @@ describe('SessionService', () => {
 
     service.logOut();
     expect(service['hasSession']()).toBe(false);
+  });
+
+  describe('Integration tests (state + localStorage)', () => {
+
+    it('should restore session from localStorage on service creation', async () => {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(mockSession));
+
+      TestBed.resetTestingModule();
+      TestBed.configureTestingModule({});
+      const reloadedService = TestBed.inject(SessionService);
+
+      const isLogged = await firstValueFrom(reloadedService.isLogged$);
+      expect(isLogged).toBe(true);
+      expect(reloadedService.sessionInformation).toEqual(mockSession);
+    });
+
+    it('should emit logged-in state only once for multiple subscribers', async () => {
+      const values1: boolean[] = [];
+      const values2: boolean[] = [];
+
+      service.isLogged$.subscribe(v => values1.push(v));
+      service.isLogged$.subscribe(v => values2.push(v));
+
+      service.logIn(mockSession);
+
+      expect(values1).toEqual([false, true]);
+      expect(values2).toEqual([false, true]);
+    });
+
+    it('should propagate logout to all subscribers', async () => {
+      const values: boolean[] = [];
+      service.isLogged$.subscribe(v => values.push(v));
+
+      service.logIn(mockSession);
+      service.logOut();
+
+      expect(values).toEqual([false, true, false]);
+    });
+
+    it('should keep storage and state consistent after multiple logins', async () => {
+      service.logIn(mockSession);
+      service.logOut();
+
+      service.logIn({ ...mockSession, id: 99 });
+
+      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}');
+      expect(stored.id).toBe(99);
+
+      const isLogged = await firstValueFrom(service.isLogged$);
+      expect(isLogged).toBe(true);
+    });
   });
 });

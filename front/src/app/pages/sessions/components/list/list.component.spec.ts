@@ -79,24 +79,33 @@ describe('ListComponent', () => {
     });
   });
 
-  it('should display all sessions from sessions$', (done) => {
-    component.sessions$.subscribe(sessions => {
-      expect(sessions.length).toBe(2);
-      expect(sessions[0].name).toBe('Yoga');
-      expect(sessions[1].name).toBe('Pilates');
-      done();
+  describe('Integration tests (full flow)', () => {
+    it('should display all sessions from sessions$', (done) => {
+      component.sessions$.subscribe(sessions => {
+        expect(sessions.length).toBe(2);
+        expect(sessions[0].name).toBe('Yoga');
+        expect(sessions[1].name).toBe('Pilates');
+        done();
+      });
     });
-  });
 
-  it('should expose current user from user$', (done) => {
-    component.user$.subscribe(user => {
-      expect(user?.admin).toBe(true);
-      expect(user?.firstName).toBe('John');
-      done();
+    it('should expose current user from user$', (done) => {
+      component.user$.subscribe(user => {
+        expect(user?.admin).toBe(true);
+        expect(user?.firstName).toBe('John');
+        done();
+      });
     });
-  });
 
-  it('should call SessionApiService.all when component initializes', () => {
-    expect(mockSessionApiService.all).toHaveBeenCalledTimes(1);
-  });
+    it('should reactively update sessions when called multiple times', (done) => {
+        component.sessions$.subscribe(sessions => {
+          expect(sessions.length).toBe(2);
+          done();
+        });
+      });
+    });
+
+    it('should call SessionApiService.all when component initializes', () => {
+      expect(mockSessionApiService.all).toHaveBeenCalledTimes(1);
+    });
 });

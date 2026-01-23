@@ -13,6 +13,10 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterTestingModule } from '@angular/router/testing';
 import { SessionInformation } from 'src/app/core/models/auth/sessionInformation.interface';
+import { Component } from '@angular/core';
+
+@Component({ template: '<p>Dummy</p>' })
+class DummyComponent {}
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -20,7 +24,7 @@ describe('LoginComponent', () => {
 
   let mockAuthService: Partial<AuthService>;
   let mockSessionService: Partial<SessionService>;
-  let mockRouter: Partial<Router>;
+  let mockRouter: Router;
 
   const mockSession: SessionInformation = {
     token: 'jwt-token',
@@ -41,13 +45,11 @@ describe('LoginComponent', () => {
       logIn: jest.fn()
     };
 
-    mockRouter = {
-      navigate: jest.fn()
-    };
-
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule,
+        RouterTestingModule.withRoutes([
+          { path: 'sessions', component: DummyComponent }
+        ]),
         BrowserAnimationsModule,
         ReactiveFormsModule,
         MatCardModule,
@@ -58,13 +60,13 @@ describe('LoginComponent', () => {
       ],
       providers: [
         { provide: AuthService, useValue: mockAuthService },
-        { provide: SessionService, useValue: mockSessionService },
-        { provide: Router, useValue: mockRouter }
+        { provide: SessionService, useValue: mockSessionService }
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
+    mockRouter = TestBed.inject(Router);
     fixture.detectChanges();
   });
 
@@ -88,7 +90,7 @@ describe('LoginComponent', () => {
     });
 
     expect(mockSessionService.logIn).toHaveBeenCalledWith(mockSession);
-    expect(mockRouter.navigate).toHaveBeenCalledWith(['/sessions']);
+    expect(mockRouter.url).toBe('/sessions');
     expect(component.onError).toBe(false);
   });
 
@@ -104,6 +106,39 @@ describe('LoginComponent', () => {
 
     expect(component.onError).toBe(true);
     expect(mockSessionService.logIn).not.toHaveBeenCalled();
-    expect(mockRouter.navigate).not.toHaveBeenCalled();
+    expect(mockRouter.url).not.toBe('/sessions');
+  });
+
+  describe('Integration tests (Router + login flow)', () => {
+
+    it('should navigate to /sessions after successful login', async () => {
+      component.form.setValue({ email: 'jdoe@example.com', password: '123456' });
+
+      await component.submit();
+      await fixture.whenStable();
+
+      expect(component.onError).toBe(false);
+      expect(mockRouter.url).toBe('/sessions');
+    });
+
+    it('should show error state on login failure', async () => {
+      (mockAuthService.login as jest.Mock).mockReturnValueOnce(
+        throwError(() => new Error('Login failed'))
+      );
+
+      component.form.setValue({ email: 'jdoe@example.com', password: 'wrongpass' });
+
+      await component.submit();
+      await fixture.whenStable();
+
+      expect(component.onError).toBe(true);
+      expect(mockRouter.url).not.toBe('/sessions');
+    });
+
+    it('should disable submit when form is invalid', () => {
+      component.form.setValue({ email: '', password: '' });
+      expect(component.form.valid).toBe(false);
+    });
+
   });
 });

@@ -50,7 +50,6 @@ describe('TeacherService', () => {
 
     const req = httpMock.expectOne(baseUrl);
     expect(req.request.method).toBe('GET');
-
     req.flush(teachers);
   });
 
@@ -61,7 +60,38 @@ describe('TeacherService', () => {
 
     const req = httpMock.expectOne(`${baseUrl}/1`);
     expect(req.request.method).toBe('GET');
-
     req.flush(mockTeacher);
+  });
+
+  describe('Integration tests (teacher flow)', () => {
+
+    it('should fetch all teachers then fetch one detail', () => {
+      const teachers: Teacher[] = [mockTeacher];
+
+      service.all().subscribe(result => {
+        expect(result).toEqual(teachers);
+      });
+      const allReq = httpMock.expectOne(baseUrl);
+      expect(allReq.request.method).toBe('GET');
+      allReq.flush(teachers);
+
+      service.detail('1').subscribe(result => {
+        expect(result).toEqual(mockTeacher);
+      });
+      const detailReq = httpMock.expectOne(`${baseUrl}/1`);
+      expect(detailReq.request.method).toBe('GET');
+      detailReq.flush(mockTeacher);
+    });
+
+    it('should handle error when fetching a teacher', () => {
+      service.detail('999').subscribe({
+        next: () => fail('should not succeed'),
+        error: err => expect(err.status).toBe(404)
+      });
+
+      const req = httpMock.expectOne(`${baseUrl}/999`);
+      req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+    });
+
   });
 });

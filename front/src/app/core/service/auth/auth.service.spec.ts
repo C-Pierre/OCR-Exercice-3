@@ -33,10 +33,10 @@ describe('AuthService', () => {
 
   it('should register user', () => {
     const payload: RegisterRequest = {
-        firstName: 'test_test',
-        lastName: 'test_test',
-        email: 'test@test.com',
-        password: '123456'
+      firstName: 'test_test',
+      lastName: 'test_test',
+      email: 'test@test.com',
+      password: '123456'
     };
 
     service.register(payload).subscribe(response => {
@@ -70,5 +70,89 @@ describe('AuthService', () => {
     expect(req.request.body).toEqual(payload);
 
     req.flush(mockSession);
+  });
+
+  describe('Integration tests (HTTP contract)', () => {
+
+    it('should handle login API error (401)', () => {
+      const payload: LoginRequest = {
+        email: 'wrong@test.com',
+        password: 'wrong'
+      };
+
+      service.login(payload).subscribe({
+        next: () => fail('should not succeed'),
+        error: error => {
+          expect(error.status).toBe(401);
+        }
+      });
+
+      const req = httpMock.expectOne(`${baseUrl}/login`);
+      expect(req.request.method).toBe('POST');
+
+      req.flush(
+        { message: 'Invalid credentials' },
+        { status: 401, statusText: 'Unauthorized' }
+      );
+    });
+
+    it('should handle register API error (400)', () => {
+      const payload: RegisterRequest = {
+        firstName: '',
+        lastName: '',
+        email: 'invalid',
+        password: '123'
+      };
+
+      service.register(payload).subscribe({
+        next: () => fail('should not succeed'),
+        error: error => {
+          expect(error.status).toBe(400);
+        }
+      });
+
+      const req = httpMock.expectOne(`${baseUrl}/register`);
+      expect(req.request.method).toBe('POST');
+
+      req.flush(
+        { message: 'Validation error' },
+        { status: 400, statusText: 'Bad Request' }
+      );
+    });
+
+    it('should allow register then login flow', () => {
+      const registerPayload: RegisterRequest = {
+        firstName: 'John',
+        lastName: 'Doe',
+        email: 'john@doe.com',
+        password: '123456'
+      };
+
+      const loginPayload: LoginRequest = {
+        email: 'john@doe.com',
+        password: '123456'
+      };
+
+      const mockSession = {
+        token: 'jwt-token',
+        userId: 1
+      };
+
+      service.register(registerPayload).subscribe(response => {
+        expect(response).toBeUndefined();
+      });
+
+      const registerReq = httpMock.expectOne(`${baseUrl}/register`);
+      expect(registerReq.request.method).toBe('POST');
+      registerReq.flush(null);
+
+      service.login(loginPayload).subscribe(session => {
+        expect(session).toEqual(mockSession);
+      });
+
+      const loginReq = httpMock.expectOne(`${baseUrl}/login`);
+      expect(loginReq.request.method).toBe('POST');
+      loginReq.flush(mockSession);
+    });
   });
 });

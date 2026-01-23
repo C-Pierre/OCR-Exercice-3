@@ -41,7 +41,7 @@ describe('SessionApiService', () => {
       teacherId: 42,
       users: [],
       date: new Date('2026-01-10T10:00:00Z')
-    } as Session];
+    }];
 
     service.all().subscribe(result => {
       expect(result).toEqual(session);
@@ -134,7 +134,6 @@ describe('SessionApiService', () => {
     const req = httpMock.expectOne(`${baseUrl}/1/participate/99`);
     expect(req.request.method).toBe('POST');
     expect(req.request.body).toBeNull();
-
     req.flush(null);
   });
 
@@ -145,7 +144,53 @@ describe('SessionApiService', () => {
 
     const req = httpMock.expectOne(`${baseUrl}/1/participate/99`);
     expect(req.request.method).toBe('DELETE');
-
     req.flush(null);
+  });
+
+  describe('Integration tests (session flow)', () => {
+    it('should create, participate, fetch and delete session flow', () => {
+      const session: Session = {
+        id: 1,
+        name: 'Physique',
+        description: 'Cours de physique',
+        teacherId: 1,
+        users: [],
+        date: new Date('2026-01-15T14:00:00Z')
+      };
+
+      service.create(session).subscribe(result => {
+        expect(result).toEqual(session);
+      });
+      const createReq = httpMock.expectOne(baseUrl);
+      expect(createReq.request.method).toBe('POST');
+      createReq.flush(session);
+
+      service.participate('1', '99').subscribe(res => expect(res).toBeUndefined());
+      const participateReq = httpMock.expectOne(`${baseUrl}/1/participate/99`);
+      expect(participateReq.request.method).toBe('POST');
+      participateReq.flush(null);
+
+      service.detail('1').subscribe(res => {
+        expect(res).toEqual(session);
+      });
+      const detailReq = httpMock.expectOne(`${baseUrl}/1`);
+      expect(detailReq.request.method).toBe('GET');
+      detailReq.flush(session);
+
+      service.delete('1').subscribe(res => expect(res).toBeUndefined());
+      const deleteReq = httpMock.expectOne(`${baseUrl}/1`);
+      expect(deleteReq.request.method).toBe('DELETE');
+      deleteReq.flush(null);
+    });
+
+    it('should handle errors correctly', () => {
+      service.detail('999').subscribe({
+        next: () => fail('should not succeed'),
+        error: err => expect(err.status).toBe(404)
+      });
+
+      const req = httpMock.expectOne(`${baseUrl}/999`);
+      req.flush({ message: 'Not Found' }, { status: 404, statusText: 'Not Found' });
+    });
   });
 });

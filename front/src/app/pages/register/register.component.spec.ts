@@ -15,7 +15,6 @@ import { expect } from '@jest/globals';
 describe('RegisterComponent', () => {
   let component: RegisterComponent;
   let fixture: ComponentFixture<RegisterComponent>;
-
   let mockAuthService: Partial<AuthService>;
   let mockRouter: Partial<Router>;
 
@@ -154,5 +153,64 @@ describe('RegisterComponent', () => {
     await fixture.whenStable();
 
     expect(component.onError).toBe(true);
+  });
+
+  describe('Integration tests (registration flow)', () => {
+
+    it('should complete registration flow successfully', async () => {
+      component.form.setValue({
+        firstName: 'Alice',
+        lastName: 'Smith',
+        email: 'alice.smith@example.com',
+        password: 'password123'
+      });
+
+      await component.submit();
+      await fixture.whenStable();
+
+      expect(mockAuthService.register).toHaveBeenCalledWith({
+        firstName: 'Alice',
+        lastName: 'Smith',
+        email: 'alice.smith@example.com',
+        password: 'password123'
+      });
+      expect(mockRouter.navigate).toHaveBeenCalledWith(['/login']);
+      expect(component.onError).toBe(false);
+    });
+
+    it('should handle registration error correctly', async () => {
+      (mockAuthService.register as jest.Mock).mockReturnValueOnce(
+        throwError(() => new Error('Registration failed'))
+      );
+
+      component.form.setValue({
+        firstName: 'Bob',
+        lastName: 'Brown',
+        email: 'bob.brown@example.com',
+        password: 'password123'
+      });
+
+      await component.submit();
+      await fixture.whenStable();
+
+      expect(component.onError).toBe(true);
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+    });
+
+    it('should block submit when form is invalid', async () => {
+      component.form.setValue({
+        firstName: '',
+        lastName: '',
+        email: '',
+        password: ''
+      });
+
+      await component.submit();
+      await fixture.whenStable();
+
+      expect(mockAuthService.register).not.toHaveBeenCalled();
+      expect(mockRouter.navigate).not.toHaveBeenCalled();
+    });
+
   });
 });
